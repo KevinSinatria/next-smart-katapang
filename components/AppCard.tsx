@@ -42,7 +42,7 @@ export function AppCard({ app, categoryName }: AppCardProps) {
             <CardTitle className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors line-clamp-2">
               {app.title}
             </CardTitle>
-            <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors flex-shrink-0 mt-1" />
+            <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors shrink-0 mt-1" />
           </div>
           {categoryName && (
             <Badge variant="secondary" className="w-fit bg-blue-50 text-blue-700 hover:bg-blue-100">

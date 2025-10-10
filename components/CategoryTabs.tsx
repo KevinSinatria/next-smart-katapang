@@ -14,7 +14,7 @@ export function CategoryTabs({ categories, selectedCategory, onSelectCategory }:
     <div className="flex flex-wrap gap-2 justify-center">
       <Button
         onClick={() => onSelectCategory(null)}
-        variant={selectedCategory === null ? 'default' : 'outline'}
+        variant={selectedCategory === null ? 'default' : 'outline-solid'}
         className={`rounded-full px-6 transition-all duration-200 ${
           selectedCategory === null
             ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md'
@@ -28,7 +28,7 @@ export function CategoryTabs({ categories, selectedCategory, onSelectCategory }:
         <Button
           key={category.id}
           onClick={() => onSelectCategory(category.slug)}
-          variant={selectedCategory === category.slug ? 'default' : 'outline'}
+          variant={selectedCategory === category.slug ? 'default' : 'outline-solid'}
           className={`rounded-full px-6 transition-all duration-200 ${
             selectedCategory === category.slug
               ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-md'

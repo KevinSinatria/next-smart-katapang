@@ -24,15 +24,15 @@ export function Footer() {
             <h4 className="text-white font-semibold mb-4">Kontak</h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
-                <MapPin className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
                 <span>Jl. Raya Katapang, Katapang, Bandung, Jawa Barat</span>
               </li>
               <li className="flex items-center gap-2">
-                <Phone className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                <Phone className="w-5 h-5 text-blue-400 shrink-0" />
                 <span>(022) 1234567</span>
               </li>
               <li className="flex items-center gap-2">
-                <Mail className="w-5 h-5 text-blue-400 flex-shrink-0" />
+                <Mail className="w-5 h-5 text-blue-400 shrink-0" />
                 <a
                   href="mailto:info@smkn1katapang.sch.id"
                   className="hover:text-blue-400 transition-colors"
