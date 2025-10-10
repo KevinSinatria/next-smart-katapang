@@ -57,11 +57,11 @@ export default function Home() {
       <Navbar />
 
       <main>
-        <div id="home">
+        <div id="home" className='scroll-mt-20'> 
           <HeroSection />
         </div>
 
-        <section id="apps-section" className="py-16 md:py-20">
+        <section id="apps-section" className="py-16 md:py-20 scroll-mt-12">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">

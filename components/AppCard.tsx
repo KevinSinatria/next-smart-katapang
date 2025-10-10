@@ -1,10 +1,17 @@
-'use client';
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { ExternalLink } from 'lucide-react';
-import { App } from '@/types';
-import { useState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ExternalLink } from "lucide-react";
+import { App } from "@/types";
+import { useState } from "react";
+import Image from "next/image";
 
 interface AppCardProps {
   app: App;
@@ -26,11 +33,13 @@ export function AppCard({ app, categoryName }: AppCardProps) {
           {!imageLoaded && (
             <div className="w-full h-full animate-pulse bg-slate-200"></div>
           )}
-          <img
+          <Image
             src={app.image_url}
             alt={app.title}
+            width={500}
+            height={500}
             className={`w-full h-full object-cover group-hover:scale-105 transition-transform duration-300 ${
-              imageLoaded ? 'opacity-100' : 'opacity-0'
+              imageLoaded ? "opacity-100" : "opacity-0"
             }`}
             onLoad={() => setImageLoaded(true)}
             loading="lazy"
@@ -45,7 +54,10 @@ export function AppCard({ app, categoryName }: AppCardProps) {
             <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors shrink-0 mt-1" />
           </div>
           {categoryName && (
-            <Badge variant="secondary" className="w-fit bg-blue-50 text-blue-700 hover:bg-blue-100">
+            <Badge
+              variant="secondary"
+              className="w-fit bg-blue-50 text-blue-700 hover:bg-blue-100"
+            >
               {categoryName}
             </Badge>
           )}

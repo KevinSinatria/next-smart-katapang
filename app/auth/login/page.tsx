@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { GraduationCap, Loader2, AlertCircle } from 'lucide-react';
+import Image from 'next/image';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -39,7 +40,8 @@ export default function LoginPage() {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-blue-600 to-blue-700 rounded-2xl mb-4">
-            <GraduationCap className="w-8 h-8 text-white" />
+            {/* <GraduationCap className="w-8 h-8 text-white" /> */}
+            <Image src="/logo_nekat.webp" alt="Logo SMKN 1 Katapang" width={500} height={500} className="w-13 h-13" />
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Portal Digital</h1>
           <p className="text-slate-600">SMKN 1 Katapang</p>
@@ -103,12 +105,12 @@ export default function LoginPage() {
                 )}
               </Button>
 
-              <div className="text-center text-sm text-slate-600">
+              {/* <div className="text-center text-sm text-slate-600">
                 Belum punya akun?{' '}
                 <Link href="/auth/signup" className="text-blue-600 hover:text-blue-700 font-medium">
                   Daftar
                 </Link>
-              </div>
+              </div> */}
 
               <div className="text-center">
                 <Link href="/" className="text-sm text-slate-600 hover:text-slate-900">

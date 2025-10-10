@@ -1,18 +1,40 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { supabase } from '@/lib/supabase';
-import { Category } from '@/types';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Pencil, Trash2, Loader2 } from 'lucide-react';
-import { useAuth } from '@/lib/auth-context';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { Category } from "@/types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
+import { useRouter } from "next/navigation";
+import slugify from "slugify";
 
 export default function AdminCategoriesPage() {
   const { profile } = useAuth();
@@ -21,11 +43,15 @@ export default function AdminCategoriesPage() {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
-  const [formData, setFormData] = useState({ name: '', slug: '', description: '' });
+  const [formData, setFormData] = useState({
+    name: "",
+    slug: "",
+    description: "",
+  });
 
   useEffect(() => {
-    if (profile?.role !== 'admin') {
-      router.push('/admin');
+    if (profile?.role !== "admin") {
+      router.push("/admin");
       return;
     }
     fetchCategories();
@@ -33,7 +59,10 @@ export default function AdminCategoriesPage() {
 
   const fetchCategories = async () => {
     setLoading(true);
-    const { data } = await supabase.from('categories').select('*').order('name');
+    const { data } = await supabase
+      .from("categories")
+      .select("*")
+      .order("name");
     setCategories(data || []);
     setLoading(false);
   };
@@ -42,33 +71,40 @@ export default function AdminCategoriesPage() {
     e.preventDefault();
 
     if (editingCategory) {
-      await supabase.from('categories').update(formData).eq('id', editingCategory.id);
+      await supabase
+        .from("categories")
+        .update(formData)
+        .eq("id", editingCategory.id);
     } else {
-      await supabase.from('categories').insert([formData]);
+      await supabase.from("categories").insert([formData]);
     }
 
     setDialogOpen(false);
     setEditingCategory(null);
-    setFormData({ name: '', slug: '', description: '' });
+    setFormData({ name: "", slug: "", description: "" });
     fetchCategories();
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm('Yakin ingin menghapus kategori ini?')) {
-      await supabase.from('categories').delete().eq('id', id);
+    if (confirm("Yakin ingin menghapus kategori ini?")) {
+      await supabase.from("categories").delete().eq("id", id);
       fetchCategories();
     }
   };
 
   const openEditDialog = (category: Category) => {
     setEditingCategory(category);
-    setFormData({ name: category.name, slug: category.slug, description: category.description || '' });
+    setFormData({
+      name: category.name,
+      slug: category.slug,
+      description: category.description || "",
+    });
     setDialogOpen(true);
   };
 
   const openCreateDialog = () => {
     setEditingCategory(null);
-    setFormData({ name: '', slug: '', description: '' });
+    setFormData({ name: "", slug: "", description: "" });
     setDialogOpen(true);
   };
 
@@ -81,7 +117,10 @@ export default function AdminCategoriesPage() {
         </div>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogTrigger asChild>
-            <Button onClick={openCreateDialog} className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              onClick={openCreateDialog}
+              className="bg-blue-600 hover:bg-blue-700"
+            >
               <Plus className="mr-2 h-4 w-4" />
               Tambah Kategori
             </Button>
@@ -89,9 +128,11 @@ export default function AdminCategoriesPage() {
           <DialogContent>
             <form onSubmit={handleSubmit}>
               <DialogHeader>
-                <DialogTitle>{editingCategory ? 'Edit' : 'Tambah'} Kategori</DialogTitle>
+                <DialogTitle>
+                  {editingCategory ? "Edit" : "Tambah"} Kategori
+                </DialogTitle>
                 <DialogDescription>
-                  {editingCategory ? 'Ubah' : 'Buat'} kategori aplikasi baru
+                  {editingCategory ? "Ubah" : "Buat"} kategori aplikasi baru
                 </DialogDescription>
               </DialogHeader>
               <div className="space-y-4 py-4">
@@ -100,25 +141,31 @@ export default function AdminCategoriesPage() {
                   <Input
                     id="name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => {
+                      setFormData((prev) => ({
+                        ...prev,
+                        name: e.target.value,
+                      }));
+                      setFormData((prev) => ({
+                        ...prev,
+                        slug: slugify(e.target.value, { lower: true }),
+                      }));
+                    }}
                     required
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="slug">Slug</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                    required
-                  />
+                  <Input id="slug" value={formData.slug} required disabled />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="description">Deskripsi</Label>
                   <Textarea
                     id="description"
                     value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, description: e.target.value })
+                    }
                   />
                 </div>
               </div>
@@ -155,9 +202,11 @@ export default function AdminCategoriesPage() {
               <TableBody>
                 {categories.map((category) => (
                   <TableRow key={category.id}>
-                    <TableCell className="font-medium">{category.name}</TableCell>
+                    <TableCell className="font-medium">
+                      {category.name}
+                    </TableCell>
                     <TableCell>{category.slug}</TableCell>
-                    <TableCell>{category.description || '-'}</TableCell>
+                    <TableCell>{category.description || "-"}</TableCell>
                     <TableCell className="text-right">
                       <Button
                         variant="ghost"
