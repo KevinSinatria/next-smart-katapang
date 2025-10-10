@@ -19,10 +19,10 @@ export function Navbar() {
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold text-slate-900 leading-tight">
-                SMKN 1 Katapang
+                Smart Katapang
               </span>
               <span className="text-xs text-slate-600 leading-tight">
-                Portal Digital
+                Portal Digital SMKN 1 Katapang
               </span>
             </div>
           </div>
