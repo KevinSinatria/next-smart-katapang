@@ -3,6 +3,7 @@
 import { GraduationCap, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,7 +14,8 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-3">
             <div className="flex items-center justify-center w-10 h-10 bg-linear-to-br from-blue-600 to-blue-700 rounded-lg">
-              <GraduationCap className="w-6 h-6 text-white" />
+              {/* <GraduationCap className="w-6 h-6 text-white" /> */}
+              <Image src="/logo_nekat.webp" alt="Logo SMKN 1 Katapang" width={500} height={500} className="w-6 h-6" />
             </div>
             <div className="flex flex-col">
               <span className="text-lg font-bold text-slate-900 leading-tight">

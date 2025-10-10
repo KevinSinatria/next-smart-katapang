@@ -9,7 +9,7 @@ export function HeroSection() {
   };
 
   return (
-    <section className="relative bg-linear-to-r from-[#1E40AF] to-[#3B82F6] text-white overflow-hidden">
+    <section className="relative bg-linear-to-r from-[#1E40AF] to-[#3B82F6] text-white overflow-hidden min-h-screen h-full  ">
       {/* <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmZmZmYiIGZpbGwtb3BhY2l0eT0iMC4wNSI+PHBhdGggZD0iTTM2IDE2YzAgMi4yMDktMS43OTEgNC00IDRzLTQtMS43OTEtNC00IDEuNzkxLTQgNC00IDQgMS43OTEgNCA0em0yMCAyMGMwIDIuMjA5LTEuNzkxIDQtNCA0cy00LTEuNzkxLTQtNCAxLjc5MS00IDQtNCA0IDEuNzkxIDQgNHpNMiAyYzAgMi4yMDktMS43OTEgNC00IDRzLTQtMS43OTEtNC00IDEuNzkxLTQgNC00IDQgMS43OTEgNCA0eiIvPjwvZz48L2c+PC9zdmc+')] opacity-30"></div> */}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28 relative z-10">
@@ -21,7 +21,7 @@ export function HeroSection() {
               alt="Logo SMKN 1 Katapang"
               width={500}
               height={500}
-              className="w-8 h-8 md:w-16 md:h-16"
+              className="w-12 h-12 md:w-16 md:h-16"
             />
           </div>
 

@@ -1,4 +1,5 @@
 import { GraduationCap, Mail, MapPin, Phone } from 'lucide-react';
+import Image from 'next/image';
 
 export function Footer() {
   return (
@@ -8,7 +9,8 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="flex items-center justify-center w-10 h-10 bg-blue-600 rounded-lg">
-                <GraduationCap className="w-6 h-6 text-white" />
+                {/* <GraduationCap className="w-6 h-6 text-white" /> */}
+                <Image src="/logo_nekat.webp" alt="Logo SMKN 1 Katapang" width={500} height={500} className="w-8 h-8" />
               </div>
               <div>
                 <h3 className="text-white font-bold text-lg">SMKN 1 Katapang</h3>
