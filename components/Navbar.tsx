@@ -39,7 +39,7 @@ export function Navbar() {
               Aplikasi
             </a>
             <a
-              href="https://smkn1katapang.sch.id"
+              href="https://smkn1katapang-bdg.sch.id/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-slate-700 hover:text-blue-600 font-medium transition-colors"
@@ -81,7 +81,7 @@ export function Navbar() {
               Aplikasi
             </a>
             <a
-              href="https://smkn1katapang.sch.id"
+              href="https://smkn1katapang-bdg.sch.id/"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-slate-700 hover:text-blue-600 font-medium transition-colors py-2"
