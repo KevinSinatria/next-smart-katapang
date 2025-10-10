@@ -16,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={plusJakartaSans.variable}>
+    <html lang="id" className={`${plusJakartaSans.variable} scroll-smooth`}>
       <body className="font-sans antialiased">
         <AuthProvider>{children}</AuthProvider>
       </body>
