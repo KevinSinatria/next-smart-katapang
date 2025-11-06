@@ -42,6 +42,7 @@ import { Plus, Pencil, Trash2, Loader2 } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import slugify from "slugify";
 import path from "node:path";
+import Image from "next/image";
 
 export default function AdminAppsPage() {
   const { profile } = useAuth();
@@ -117,7 +118,7 @@ export default function AdminAppsPage() {
       await supabase.from("apps").insert([
         {
           ...formData,
-          image_url: uploadedImage?.url,
+          image_url: uploadedImage ? uploadedImage.url : formData.image_url,
           image_path: uploadedImage?.path,
         },
       ]);
@@ -285,10 +286,18 @@ export default function AdminAppsPage() {
                     <Input
                       id="upload_thumbnail"
                       type="file"
-                      required
                       onChange={(e) => setFile(e.target.files?.[0] || null)}
                       accept="image/*"
                     />
+                    {editingApp && formData.image_url && (
+                      <Image
+                        width={256}
+                        height={256}
+                        src={formData.image_url}
+                        alt="Current Thumbnail"
+                        className="w-32 h-32 object-cover rounded-md mb-2"
+                      />
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="visit_url">URL Aplikasi</Label>
