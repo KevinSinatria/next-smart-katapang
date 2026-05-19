@@ -6,7 +6,7 @@ import { HeroSection } from '@/components/HeroSection';
 import { CategoryTabs } from '@/components/CategoryTabs';
 import { AppCard } from '@/components/AppCard';
 import { Footer } from '@/components/Footer';
-import { supabase } from '@/lib/supabase';
+import { getCategories, getApps } from '@/lib/actions';
 import { App, Category } from '@/types';
 import { Loader2 } from 'lucide-react';
 
@@ -22,18 +22,13 @@ export default function Home() {
 
   const fetchData = async () => {
     try {
-      const [categoriesResponse, appsResponse] = await Promise.all([
-        supabase.from('categories').select('*').order('name'),
-        supabase.from('apps').select('*').order('created_at', { ascending: false }),
+      const [categoriesData, appsData] = await Promise.all([
+        getCategories(),
+        getApps(),
       ]);
 
-      if (categoriesResponse.data) {
-        setCategories(categoriesResponse.data);
-      }
-
-      if (appsResponse.data) {
-        setApps(appsResponse.data);
-      }
+      setCategories(categoriesData);
+      setApps(appsData);
     } catch (error) {
       console.error('Error fetching data:', error);
     } finally {

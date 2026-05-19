@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { getCategories, createCategory, updateCategory, deleteCategory } from "@/lib/actions";
 import { Category } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -59,11 +59,8 @@ export default function AdminCategoriesPage() {
 
   const fetchCategories = async () => {
     setLoading(true);
-    const { data } = await supabase
-      .from("categories")
-      .select("*")
-      .order("name");
-    setCategories(data || []);
+    const data = await getCategories();
+    setCategories(data);
     setLoading(false);
   };
 
@@ -71,12 +68,9 @@ export default function AdminCategoriesPage() {
     e.preventDefault();
 
     if (editingCategory) {
-      await supabase
-        .from("categories")
-        .update(formData)
-        .eq("id", editingCategory.id);
+      await updateCategory(editingCategory.id, formData);
     } else {
-      await supabase.from("categories").insert([formData]);
+      await createCategory(formData);
     }
 
     setDialogOpen(false);
@@ -87,7 +81,7 @@ export default function AdminCategoriesPage() {
 
   const handleDelete = async (id: string) => {
     if (confirm("Yakin ingin menghapus kategori ini?")) {
-      await supabase.from("categories").delete().eq("id", id);
+      await deleteCategory(id);
       fetchCategories();
     }
   };

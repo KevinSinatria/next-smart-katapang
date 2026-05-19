@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
+import { getApps, getCategories, createApp, updateApp, deleteApp } from "@/lib/actions";
 import { App, Category } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -96,15 +97,12 @@ export default function AdminAppsPage() {
 
   const fetchData = async () => {
     setLoading(true);
-    const [appsRes, categoriesRes] = await Promise.all([
-      supabase
-        .from("apps")
-        .select("*")
-        .order("created_at", { ascending: false }),
-      supabase.from("categories").select("*").order("name"),
+    const [appsData, categoriesData] = await Promise.all([
+      getApps(),
+      getCategories(),
     ]);
-    setApps(appsRes.data || []);
-    setCategories(categoriesRes.data || []);
+    setApps(appsData);
+    setCategories(categoriesData);
     setLoading(false);
   };
 
@@ -112,16 +110,13 @@ export default function AdminAppsPage() {
     e.preventDefault();
 
     if (editingApp) {
-      await supabase.from("apps").update(formData).eq("id", editingApp.id);
+      await updateApp(editingApp.id, formData);
     } else {
       const uploadedImage = await handleUpload();
-      await supabase.from("apps").insert([
-        {
-          ...formData,
-          image_url: uploadedImage ? uploadedImage.url : formData.image_url,
-          image_path: uploadedImage?.path,
-        },
-      ]);
+      await createApp({
+        ...formData,
+        image_url: uploadedImage ? uploadedImage.url : formData.image_url,
+      });
     }
 
     setDialogOpen(false);
@@ -133,16 +128,17 @@ export default function AdminAppsPage() {
   const handleDelete = async (id: string) => {
     try {
       if (confirm("Yakin ingin menghapus aplikasi ini?")) {
-        const { data: app } = await supabase
-          .from("apps")
-          .select("*")
-          .eq("id", id)
-          .single();
-        app.image_path &&
-          (await supabase.storage
-            .from("smart-katapang")
-            .remove([app.image_path]));
-        await supabase.from("apps").delete().eq("id", id);
+        const appsData = await getApps();
+        const app = appsData.find((a) => a.id === id);
+        if (app && app.image_url) {
+          const filePath = app.image_url.split("smart-katapang/")[1];
+          if (filePath) {
+            await supabase.storage
+              .from("smart-katapang")
+              .remove([filePath]);
+          }
+        }
+        await deleteApp(id);
         fetchData();
       }
     } catch (error) {
