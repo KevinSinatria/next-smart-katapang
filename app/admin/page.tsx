@@ -8,7 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { supabase } from "@/lib/supabase";
+import {
+  getAppsCount,
+  getCategoriesCount,
+  getProfilesCount,
+} from "@/lib/actions";
 import { useAuth } from "@/lib/auth-context";
 import { AppWindow, Tags, Users, TrendingUp } from "lucide-react";
 
@@ -19,7 +23,6 @@ export default function AdminDashboardPage() {
     totalCategories: 0,
     totalUsers: 0,
   });
-  console.log(profile);
 
   useEffect(() => {
     fetchStats();
@@ -27,23 +30,16 @@ export default function AdminDashboardPage() {
 
   const fetchStats = async () => {
     try {
-      const [appsResponse, categoriesResponse, usersResponse] =
-        await Promise.all([
-          supabase.from("apps").select("id", { count: "exact", head: true }),
-          supabase
-            .from("categories")
-            .select("id", { count: "exact", head: true }),
-          profile?.role === "admin"
-            ? supabase
-                .from("profiles")
-                .select("id", { count: "exact", head: true })
-            : Promise.resolve({ count: 0 }),
-        ]);
+      const [appsCount, categoriesCount, usersCount] = await Promise.all([
+        getAppsCount(),
+        getCategoriesCount(),
+        profile?.role === "admin" ? getProfilesCount() : Promise.resolve(0),
+      ]);
 
       setStats({
-        totalApps: appsResponse.count || 0,
-        totalCategories: categoriesResponse.count || 0,
-        totalUsers: usersResponse.count || 0,
+        totalApps: appsCount,
+        totalCategories: categoriesCount,
+        totalUsers: usersCount,
       });
     } catch (error) {
       console.error("Error fetching stats:", error);
