@@ -1,19 +1,25 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth-context';
-import { AdminSidebar } from '@/components/admin/AdminSidebar';
-import { AdminHeader } from '@/components/admin/AdminHeader';
-import { Loader2 } from 'lucide-react';
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/lib/auth-context";
+import { AdminSidebar } from "@/components/admin/AdminSidebar";
+import { AdminHeader } from "@/components/admin/AdminHeader";
+import { Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
-  const { user, profile, loading } = useAuth();
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const { user, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/auth/login');
+      router.push("/auth/login");
+      toast.info("Anda belum login");
     }
   }, [user, loading, router]);
 

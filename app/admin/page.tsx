@@ -8,7 +8,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { getAppsCount, getCategoriesCount, getProfilesCount } from "@/lib/actions";
+import {
+  getAppsCount,
+  getCategoriesCount,
+  getProfilesCount,
+} from "@/lib/actions";
 import { useAuth } from "@/lib/auth-context";
 import { AppWindow, Tags, Users, TrendingUp } from "lucide-react";
 
@@ -19,7 +23,6 @@ export default function AdminDashboardPage() {
     totalCategories: 0,
     totalUsers: 0,
   });
-  console.log(profile);
 
   useEffect(() => {
     fetchStats();

@@ -1,38 +1,46 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { useAuth } from '@/lib/auth-context';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { GraduationCap, Loader2, AlertCircle } from 'lucide-react';
-import Image from 'next/image';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useAuth } from "@/lib/auth-context";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { GraduationCap, Loader2, AlertCircle } from "lucide-react";
+import Image from "next/image";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
   const { signIn } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
     setLoading(true);
 
     const { error } = await signIn(email, password);
 
     if (error) {
-      setError(error.message || 'Gagal masuk. Periksa email dan password Anda.');
-      setLoading(false);
+      toast.error(error.message || "Gagal masuk");
     } else {
-      router.push('/admin');
+      toast.success("Login berhasil");
+      router.push("/admin");
     }
+    setLoading(false);
   };
 
   return (
@@ -41,7 +49,13 @@ export default function LoginPage() {
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-linear-to-br from-blue-600 to-blue-700 rounded-2xl mb-4">
             {/* <GraduationCap className="w-8 h-8 text-white" /> */}
-            <Image src="/logo_nekat.webp" alt="Logo SMKN 1 Katapang" width={500} height={500} className="w-13 h-13" />
+            <Image
+              src="/logo_nekat.webp"
+              alt="Logo SMKN 1 Katapang"
+              width={500}
+              height={500}
+              className="w-13 h-13"
+            />
           </div>
           <h1 className="text-2xl font-bold text-slate-900">Portal Digital</h1>
           <p className="text-slate-600">SMKN 1 Katapang</p>
@@ -101,7 +115,7 @@ export default function LoginPage() {
                     Memproses...
                   </>
                 ) : (
-                  'Masuk'
+                  "Masuk"
                 )}
               </Button>
 
@@ -113,7 +127,10 @@ export default function LoginPage() {
               </div> */}
 
               <div className="text-center">
-                <Link href="/" className="text-sm text-slate-600 hover:text-slate-900">
+                <Link
+                  href="/"
+                  className="text-sm text-slate-600 hover:text-slate-900"
+                >
                   ← Kembali ke Beranda
                 </Link>
               </div>

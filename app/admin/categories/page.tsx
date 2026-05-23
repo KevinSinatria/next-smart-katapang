@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getCategories, createCategory, updateCategory, deleteCategory } from "@/lib/actions";
+import {
+  getCategories,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+} from "@/lib/actions";
 import { Category } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,7 +55,7 @@ export default function AdminCategoriesPage() {
   });
 
   useEffect(() => {
-    if (profile?.role !== "admin") {
+    if (profile?.role.toLowerCase() !== "admin") {
       router.push("/admin");
       return;
     }

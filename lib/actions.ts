@@ -26,8 +26,17 @@ export async function getApps(): Promise<App[]> {
 }
 
 export async function getProfile(userId: string): Promise<Profile | null> {
-  const data = await prisma.profiles.findUnique({
+  const data = await prisma.user.findUnique({
     where: { id: userId },
+    select: {
+      id: true,
+      email: true,
+      full_name: true,
+      avatar_url: true,
+      role: true,
+      created_at: true,
+      updated_at: true
+    }
   });
   if (!data) return null;
   return {
@@ -40,7 +49,7 @@ export async function getProfile(userId: string): Promise<Profile | null> {
 }
 
 export async function updateProfile(userId: string, data: Partial<Profile>) {
-  return await prisma.profiles.update({
+  return await prisma.user.update({
     where: { id: userId },
     data: {
       full_name: data.full_name,
@@ -129,5 +138,5 @@ export async function getCategoriesCount() {
 }
 
 export async function getProfilesCount() {
-  return await prisma.profiles.count();
+  return await prisma.user.count();
 }
