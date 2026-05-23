@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { supabase } from '@/lib/supabase';
+import { updateProfile } from '@/lib/actions';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -33,15 +34,12 @@ export default function AdminProfilePage() {
     setMessage(null);
 
     try {
-      const { error } = await supabase
-        .from('profiles')
-        .update({
+      if (user?.id) {
+        await updateProfile(user.id, {
           full_name: profileData.full_name,
           avatar_url: profileData.avatar_url,
-        })
-        .eq('id', user?.id);
-
-      if (error) throw error;
+        });
+      }
 
       await refreshProfile();
       setMessage({ type: 'success', text: 'Profil berhasil diperbarui!' });
