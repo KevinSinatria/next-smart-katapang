@@ -16,7 +16,7 @@ export async function getCategories(): Promise<Category[]> {
 
 export async function getApps(): Promise<App[]> {
   const data = await prisma.apps.findMany({
-    orderBy: { created_at: "desc" },
+    orderBy: { title: "asc" },
   });
   return data.map((item) => ({
     ...item,
@@ -35,8 +35,8 @@ export async function getProfile(userId: string): Promise<Profile | null> {
       avatar_url: true,
       role: true,
       created_at: true,
-      updated_at: true
-    }
+      updated_at: true,
+    },
   });
   if (!data) return null;
   return {

@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
-import { getApps, getCategories, createApp, updateApp, deleteApp } from "@/lib/actions";
+import {
+  getApps,
+  getCategories,
+  createApp,
+  updateApp,
+  deleteApp,
+} from "@/lib/actions";
 import { App, Category } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -133,9 +139,7 @@ export default function AdminAppsPage() {
         if (app && app.image_url) {
           const filePath = app.image_url.split("smart-katapang/")[1];
           if (filePath) {
-            await supabase.storage
-              .from("smart-katapang")
-              .remove([filePath]);
+            await supabase.storage.from("smart-katapang").remove([filePath]);
           }
         }
         await deleteApp(id);
@@ -180,7 +184,9 @@ export default function AdminAppsPage() {
     return categories.find((cat) => cat.id === categoryId)?.name || "-";
   };
 
-  const canEdit = profile?.role === "admin" || profile?.role === "editor";
+  const canEdit =
+    profile?.role.toLowerCase() === "admin" ||
+    profile?.role.toLowerCase() === "editor";
 
   return (
     <div className="space-y-6">
@@ -359,7 +365,7 @@ export default function AdminAppsPage() {
                         >
                           <Pencil className="h-4 w-4" />
                         </Button>
-                        {profile?.role === "admin" && (
+                        {profile?.role.toLowerCase() === "admin" && (
                           <Button
                             variant="ghost"
                             size="sm"
