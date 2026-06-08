@@ -9,21 +9,21 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
 }
 
 model Categories {
   id          String   @id @default(cuid())
   name        String   @unique(map: "categories_name_key")
   slug        String   @unique(map: "categories_slug_key")
-  description String
+  description String?
   created_at  DateTime @default(now()) @db.Timestamp(6)
-  updated_at  DateTime @updatedAt @db.Timestamp(6)
+  updated_at  DateTime @default(now()) @updatedAt @db.Timestamp(6)
   apps        Apps[]
 }
 
 model Apps {
-  id          String     @id @default(cuid())
+  id          String     @id @default(uuid())
   title       String
   slug        String     @unique(map: "apps_slug_key")
   description String
@@ -44,6 +44,8 @@ model User {
   role       Role     @default(ADMIN)
   created_at DateTime @default(now()) @db.Timestamp(6)
   updated_at DateTime @updatedAt @db.Timestamp(6)
+
+  @@map("my_users")
 }
 
 enum Role {
