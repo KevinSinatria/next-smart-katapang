@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/db";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
