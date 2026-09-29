@@ -2,14 +2,16 @@ name: Keep Supabase Alive
 
 on:
   schedule:
-    - cron: "0 0 * * 2,5"
+    - cron: "0 1 * * *"
   workflow_dispatch:
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase Edge Function / API URL
+      - name: Query Supabase (read activity)
         run: |
-          curl -I "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/" \
-          -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}"
+          curl -sS --fail \
+            "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}/rest/v1/categories?select=id&limit=1" \
+            -H "apikey: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" \
+            -H "Authorization: Bearer ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}"
